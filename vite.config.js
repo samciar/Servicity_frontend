@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import inject from "@rollup/plugin-inject";
+import inject from "@rollup/plugin-inject"
 
 export default defineConfig({
     plugins: [
@@ -8,4 +8,7 @@ export default defineConfig({
          jQuery: 'jquery',
        })
     ],
-  })
+    server: {
+        historyApiFallback: true
+    }
+})
