@@ -1,0 +1,22 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+	<title>New Project</title>
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="m10 1h28c4.97 0 9 4.03 9 9v28c0 4.97-4.03 9-9 9h-28c-4.97 0-9-4.03-9-9v-28c0-4.97 4.03-9 9-9z"/>
+		</clipPath>
+		<image  width="48" height="48" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAAXNSR0IB2cksfwAAAJBQTFRF8EQ38EU38EY38Ec38Ek38Eo38Ew38U438VA48VI48VQ48VY48lk48ls48l058mA582I582U582g69Go69G069HA69HM79XY79Xg79Xs79n479oE89oQ89oY894k894w99489+JE9+JQ9+JY++Jg++Zs++Z0++Z8++aE++aM/+qU/+qY/+qg/+qo/+qs/+qw/eq/wWQAAACBJREFUeJxjZGAkEYxqGNUwqmFUw6iGUQ2jGkY1jCwNAGPHCQEp7vDoAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #000000 } 
+		.t1 { font-size: 38px;fill: #ffffff;font-weight: 700;font-family: "Roboto-Bold", "Roboto" } 
+	</style>
+	<g clip-path="url(#cp1)">
+		<path id="Layer 2" fill-rule="evenodd" class="s0" d="m10 1h28c5 0 9 4 9 9v28c0 5-4 9-9 9h-28c-5 0-9-4-9-9v-28c0-5 4-9 9-9z"/>
+		<use id="Layer 1" href="#img1" x="0" y="0"/>
+	</g>
+	<text id="S" style="transform: matrix(1,0,0,1,12,37)" >
+		<tspan x="0" y="0" class="t1">S
+</tspan>
+	</text>
+</svg>
