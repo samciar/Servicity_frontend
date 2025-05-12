@@ -1,8 +1,8 @@
 // import reactLogo from './assets/vite.svg' // usar en src: {viteLogo}
 // import viteLogo from '/vite.svg'
 import { BrowserRouter, Route, Routes } from "react-router";
-import Home from "./Pages/home";
-import Building from "./Pages/building";
+import Home from "./Pages/Home";
+import Building from "./Pages/Building";
 
 import './App.css'
 
