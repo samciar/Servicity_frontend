@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import {HeaderBar} from '../Components/HeaderBar'
+import HeaderBar from '../Components/HeaderBar'
 import Footer from '../Components/Footer'
 
 import imgCategoria1 from '../assets/imagenes_categorias/cat_1.jpg'
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='grid grid-cols-3 gap-2 mb-15 px-5'>
+      <div className='grid max-sm:grid-cols-2 sm:grid-cols-3 gap-2 mb-15 px-5'>
         <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-0'>
         <div className="flex flex-col items-center">
           <img src={imgCategoria1} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
@@ -65,7 +65,7 @@ export default function Home() {
         </a>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 px-5 py-12 text-center bg-gradient-to-r from-red-500 to-yellow-500">
+      <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-2 px-5 py-12 text-center bg-gradient-to-r from-red-500 to-yellow-500">
         <div className='grid grid-rows-2 gap-8'>
           <div className='flex flex-col items-center text-white text-2xl font-bold'>
             <span>Tareas finalizadas</span>
@@ -91,16 +91,16 @@ export default function Home() {
       <div className='p-10'>
         <h1 className='text-3xl text-balance text-amber-600 font-bold mb-10'>Conoce los que dicen nuestros clientes sobre Servicity</h1>
 
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-10">
           <div>
             <div className="flex justify-between">
-              <span className='font-bold'>Andrea C</span>
+              <span className='font-bold'>Andrea C.</span>
               <div className='flex flex-row'>
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
               </div>
             </div>
             <p>Era justo lo que necesitaba para mis tareas en el hogar. Ahora tengo mas tiempo para compartir con mi familia.</p>
@@ -109,11 +109,11 @@ export default function Home() {
             <div className="flex justify-between">
               <span className='font-bold'>Maria Pa.</span>
               <div className='flex flex-row'>
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
-                <img className='fill-yellow-400' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
+                <img className='fill-yellow-400 max-sm:size-6' src={start} alt="" />
               </div>
             </div>
             <p>Sin duda, es un servicio recomendado, Llegan en la hora acordada y conocen del tema.</p>
