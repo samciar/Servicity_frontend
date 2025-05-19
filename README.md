@@ -25,6 +25,9 @@ Desarrollar una aplicación que facilite la búsqueda, publicación y contrataci
 
 - **Figma** – Prototipo de la interfaz.
 - **Flutter** – Desarrollo de la app móvil (en progreso).
+- **React js** - Creación de las interfaces dínamicas SPA.
+- **Tailwind** - Aplicación de estilos, manejo de temas y colores corporativos en el frontend.
+- **Laravel** - Construcción del backend (propuesto).
 - **Firebase** – Autenticación y base de datos (propuesto).
 - **GitHub Projects** – Gestión del proyecto.
 
