@@ -28,7 +28,7 @@ Desarrollar una aplicación que facilite la búsqueda, publicación y contrataci
 - **React js** - Creación de las interfaces dínamicas SPA.
 - **Tailwind** - Aplicación de estilos, manejo de temas y colores corporativos en el frontend.
 - **Laravel** - Construcción del backend (propuesto).
-- **Firebase** – Autenticación y base de datos (propuesto).
+- **Firebase** – Autenticación oAuth (propuesto).
 - **GitHub Projects** – Gestión del proyecto.
 
 ## 📅 Estado del proyecto
