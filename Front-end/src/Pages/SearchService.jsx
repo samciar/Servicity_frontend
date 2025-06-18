@@ -1,9 +1,9 @@
 import React from 'react'
-import HeaderBar from './HeaderBar'
-import Footer from './Footer'
-import usuario1 from '../assets/imagenes_usuarios/usuario1.jpg'
-import usuario2 from '../assets/imagenes_usuarios/usuario2.jpg'
-import usuario3 from '../assets/imagenes_usuarios/usuario3.jpg'
+import HeaderBar from '../Components/HeaderBar'
+import Footer from '../Components/Footer'
+import usuario1 from '../assets/users/usuario1.jpg'
+import usuario2 from '../assets/users/usuario2.jpg'
+import usuario3 from '../assets/users/usuario3.jpg'
 
 export default function SearchService() {
     return (

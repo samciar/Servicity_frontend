@@ -3,21 +3,22 @@ import { Link } from 'react-router'
 import HeaderBar from '../Components/HeaderBar'
 import Footer from '../Components/Footer'
 
-import imgCategoria1 from '../assets/imagenes_categorias/cat_1.jpg'
-import imgCategoria2 from '../assets/imagenes_categorias/cat_2.jpg'
-import imgCategoria3 from '../assets/imagenes_categorias/cat_3.jpg'
-import imgCategoria4 from '../assets/imagenes_categorias/cat_4.jpg'
-import imgCategoria5 from '../assets/imagenes_categorias/cat_5.jpg'
-import imgCategoria6 from '../assets/imagenes_categorias/cat_6.jpg'
+import imgCategoria1 from '../assets/categories/cat_1.jpg'
+import imgCategoria2 from '../assets/categories/cat_2.jpg'
+import imgCategoria3 from '../assets/categories/cat_3.jpg'
+import imgCategoria4 from '../assets/categories/cat_4.jpg'
+import imgCategoria5 from '../assets/categories/cat_5.jpg'
+import imgCategoria6 from '../assets/categories/cat_6.jpg'
 import start from '../assets/star.svg'
 
 export default function Home() {
+
   return (
     <>
       <HeaderBar/>
 
       <div className="w-full h-60 px-5 py-15">
-        <h2 className='text-4xl font-bold'>Necesito ayuda con</h2>
+        <h2 className='text-4xl font-bold text-amber-600'>Necesito ayuda con</h2>
         <div className='relative'>
           <input type="text" className='border border-gray-300 rounded-full p-2 px-5 mt-4 w-full' placeholder='Prueba "Montar un tv" o "pintar un cuarto"'/>
           <svg className='absolute top-6 right-2 fill-gray-500' xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 48 48">
@@ -26,40 +27,40 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='grid max-sm:grid-cols-2 sm:grid-cols-3 gap-2 mb-15 px-5'>
-        <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-0'>
+      <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 mb-15 px-5'>
+        <a href="" className='botonCategoria p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-0'>
         <div className="flex flex-col items-center">
-          <img src={imgCategoria1} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
+          <img src={imgCategoria1} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
           <span className='text-amber-600 font-bold mt-2'>Ensamblaje</span>
         </div>
         </a>
         <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-100'>
           <div className="flex flex-col items-center">
-            <img src={imgCategoria2} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
+            <img src={imgCategoria2} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
             <span className='text-amber-600 font-bold mt-2'>Limpieza</span>
           </div>
         </a>
         <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-200'>
           <div className="flex flex-col items-center">
-            <img src={imgCategoria3} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
+            <img src={imgCategoria3} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
             <span className='text-amber-600 font-bold mt-2'>Mudanza</span>
           </div>
         </a>
         <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-300'>
           <div className="flex flex-col items-center">
-            <img src={imgCategoria4} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
+            <img src={imgCategoria4} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
             <span className='text-amber-600 font-bold mt-2'>Pintura</span>
           </div>
         </a>
         <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-400'>
           <div className="flex flex-col items-center">
-            <img src={imgCategoria5} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
+            <img src={imgCategoria5} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
             <span className='text-amber-600 font-bold mt-2'>jardinería</span>
           </div>
         </a>
         <a href="" className='p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-500'>
           <div className="flex flex-col items-center">
-            <img src={imgCategoria6} className='size-35 object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
+            <img src={imgCategoria6} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
             <span className='text-amber-600 font-bold mt-2'>Plomería</span>
           </div>
         </a>

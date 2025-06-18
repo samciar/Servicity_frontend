@@ -1,2 +1,6 @@
 @import "tailwindcss";
-@plugin "@midudev/tailwind-animations";
+/* @plugin "@midudev/tailwind-animations"; */
+
+@theme {
+    --breakpoint-xs: 30rem;
+}
