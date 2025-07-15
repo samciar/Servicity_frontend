@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import storage from '../Storage/storage'
 import servicityLogo from '../assets/servicity_logo.png'
-
+import axios from '../axios';
 
 export default function HeaderBar() {
 

@@ -7,33 +7,74 @@ export const show_alert = (msg, icon) => {
 }
 
 export const sendRequest = async(method, params, url, redir='', token=true) => {
+    try {
+        if(token){
+            const authToken = storage.get('AuthToken');
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+authToken;
+        }
 
-    if(token){
-        const authToken = storage.get('AuthToken');
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+authToken;
-    }
-
-    let res;
-    await axios({method:method, url:url, data:params}).then(
-        response => {
-            res = response,
-            (method != 'GET') ? show_alert(response.data.message, 'success'):'',
-            setTimeout( () => 
-                (redir !== '') ? window.location.href = redir : '', 2000)
-        }).catch( (errors) => {
-            let desc='';
-            res = errors.response.data.errors;
-
-            let objKeys = Object.keys(res);
-            for(let i=0; i< objKeys.length; i++){
-                let objKey = objKeys[i];
-                desc += ' '+res[objKey];
+        const response = await axios({method, url, data:params});
+        
+        // Handle successful response
+        if (response?.data) {
+            if (method !== 'GET' && response.data.message) {
+                show_alert(response.data.message, 'success');
             }
-            //errors.response.data.errors.map( (e) => {desc = desc + ' '+e})
-            show_alert(desc, 'error')
-        })
+            
+            if (redir) {
+                setTimeout(() => window.location.href = redir, 2000);
+            }
+            
+            return {
+                success: true,
+                data: response.data,
+                status: response.status
+            };
+        }
 
-    return res;
+        return {
+            success: false,
+            error: 'Invalid response format',
+            status: response.status
+        };
+
+    } catch (error) {
+        let errorMessage = 'An error occurred';
+        
+        if (error.response) {
+            // Server responded with error status
+            const { data, status } = error.response;
+            
+            if (data?.errors) {
+                // Handle multiple errors
+                errorMessage = Object.values(data.errors).join(' ');
+            } else if (data?.message) {
+                // Handle single error message
+                errorMessage = data.message;
+            }
+            
+            show_alert(errorMessage, 'error');
+            
+            return {
+                success: false,
+                error: errorMessage,
+                status,
+                data: data
+            };
+        } else if (error.request) {
+            // Request was made but no response
+            errorMessage = 'No response from server';
+        } else {
+            // Other errors
+            errorMessage = error.message;
+        }
+        
+        show_alert(errorMessage, 'error');
+        return {
+            success: false,
+            error: errorMessage
+        };
+    }
 }
 
 export const confirmation = async(name, url, redir) => {

@@ -18,17 +18,21 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Register attempt:', { name, email, password, passwordConfirmation });
-    await csrf();
-    const form = { name: name, email: email, password: password, password_confirmation: passwordConfirmation, role: 'client' };
-    const res = await sendRequest('POST', form, '/api/register', '', false);
+    try {
+      console.log('Register attempt:', { name, email, password, passwordConfirmation });
+      await csrf();
+      const form = { name: name, email: email, password: password, password_confirmation: passwordConfirmation, role: 'client' };
+      const res = await sendRequest('POST', form, '/api/register', '', false);
 
-    console.log(res);
-    
+      console.log(res);
 
-    if (res.status == true) {
-      go('/login');
+      if (res.success == true) {
+        go('/login');
+      }
+    } catch (error) {
+      console.log(error);
     }
+
   };
 
 
@@ -40,14 +44,14 @@ const Register = () => {
     console.log('GitHub login clicked');
   };
 
-return (
+  return (
     <div className='min-h-screen bg-gradient-to-br from-amber-50 to-indigo-100 flex items-center justify-center flex-row lg:items-stretch lg:content-stretch lg:justify-start gap-0'>
       <div className='flex items-center justify-center p-4 min-w-[400px] w-[50%] lg:justify-end'>
         <div className='p-8 lg:p-16 w-full max-w-md'> {/* bg-white rounded-lg shadow-xl */}
           {/* Logo */}
           <div className='flex justify-center mb-8'>
             <div className='w-24 h-8 rounded-lg flex items-center justify-center'>
-              <img src={servicityLogo}/>
+              <img src={servicityLogo} />
             </div>
           </div>
 
@@ -176,7 +180,7 @@ return (
         </div>
       </div>
       <div className='hidden bg-amber-900 w-[50%] lg:flex'>
-        <img src={backgroundRegister} className='object-cover grayscale opacity-50 w-full h-full'/>
+        <img src={backgroundRegister} className='object-cover grayscale opacity-50 w-full h-full' />
       </div>
     </div>
   )

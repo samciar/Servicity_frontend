@@ -21,9 +21,6 @@ const Login = () => {
     console.log('Login attempt:', { email, password, rememberMe });
     e.preventDefault();
 
-
-    
-
     await csrf();
     const form = { email: email, password: password };
     const res = await sendRequest('POST', form, '/api/login', '', false);
