@@ -1,10 +1,5 @@
-import Swal from 'sweetalert2'
 import storage from "./Storage/storage";
 import axios from './axios'
-
-export const show_alert = (msg, icon) => {
-    Swal.fire({title: msg, icon:icon, buttonsStyling:true});
-}
 
 export const sendRequest = async(method, params, url, redir='', token=true) => {
     try {
@@ -17,9 +12,8 @@ export const sendRequest = async(method, params, url, redir='', token=true) => {
         
         // Handle successful response
         if (response?.data) {
-            if (method !== 'GET' && response.data.message) {
-                show_alert(response.data.message, 'success');
-            }
+            // if (method !== 'GET' && response.data.message) {
+            // }
             
             if (redir) {
                 setTimeout(() => window.location.href = redir, 2000);
@@ -53,8 +47,6 @@ export const sendRequest = async(method, params, url, redir='', token=true) => {
                 errorMessage = data.message;
             }
             
-            show_alert(errorMessage, 'error');
-            
             return {
                 success: false,
                 error: errorMessage,
@@ -68,30 +60,9 @@ export const sendRequest = async(method, params, url, redir='', token=true) => {
             // Other errors
             errorMessage = error.message;
         }
-        
-        show_alert(errorMessage, 'error');
         return {
             success: false,
             error: errorMessage
         };
     }
 }
-
-export const confirmation = async(name, url, redir) => {
-
-    const alert = Swal.mixin({buttonsStyling:true});
-    alert.fire({
-        title: `Estás seguro de eliminar ${name}?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText:'<i class="fa-solid fa-check">Si, Borrar</i>',
-        cancelButtonText: '<i class="fa-solid fa-ban">No, Cerrar</i>'
-    }).then( (result ) => {
-        if(result.isConfirmed){
-            sendRequest('DELETE', {}, url, redir);
-        }
-    })
-
-}
-
-export default show_alert;
