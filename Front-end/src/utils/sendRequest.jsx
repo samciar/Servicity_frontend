@@ -1,14 +1,26 @@
-import storage from "./Storage/storage";
-import axios from './axios'
+import storage from "../Storage/storage";
+import { apiAxios } from '../axios'
 
-export const sendRequest = async(method, params, url, redir='', token=true) => {
+export const sendRequest = async({ method, params = {}, url, redir = '', token = true }) => {
     try {
         if(token){
-            const authToken = storage.get('AuthToken');
-            axios.defaults.headers.common['Authorization'] = 'Bearer '+authToken;
+            const authToken = storage.get('authToken');
+            apiAxios.defaults.headers.common['Authorization'] = 'Bearer '+authToken;
         }
-
-        const response = await axios({method, url, data:params});
+        
+        // For GET requests, use params instead of data
+        const config = {
+            method,
+            url
+        };
+        
+        if (method.toUpperCase() === 'GET') {
+            config.params = params;
+        } else {
+            config.data = params;
+        }
+        
+        const response = await apiAxios(config);
         
         // Handle successful response
         if (response?.data) {

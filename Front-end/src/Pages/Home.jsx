@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <HeaderBar/>
 
-      <div className="w-full h-60 px-5 py-15">
+      <div className="w-full h-60 px-5 py-15 xl:w-7xl xl:m-auto">
         <h2 className='text-4xl font-bold text-amber-600'>Necesito ayuda con</h2>
         <div className='relative'>
           <input type="text" className='border border-gray-300 rounded-full p-2 px-5 mt-4 w-full' placeholder='Prueba "Montar un tv" o "pintar un cuarto"'/>
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 mb-15 px-5'>
+      <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  xl:w-7xl xl:m-auto xl:mb-15 gap-2 mb-15 px-5'>
         <a href="" className='botonCategoria p-2 rounded-2xl transition hover:bg-gray-200/50 animate-slide-up-fade animate-delay-0'>
         <div className="flex flex-col items-center">
           <img src={imgCategoria1} className='size-[140px] object-cover rounded-3xl' alt="imagen categoria ensamblaje" />
@@ -66,7 +66,7 @@ export default function Home() {
         </a>
       </div>
 
-      <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-2 px-5 py-12 text-center bg-gradient-to-r from-red-500 to-yellow-500">
+      <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-2 px-5 py-12 text-center bg-gradient-to-r from-red-500 to-yellow-500 xl:w-7xl xl:m-auto">
         <div className='grid grid-rows-2 gap-8'>
           <div className='flex flex-col items-center text-white text-2xl font-bold'>
             <span>Tareas finalizadas</span>
@@ -89,7 +89,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='p-10'>
+      <div className='p-10 xl:w-7xl xl:m-auto xl:mt-7 xl:mb-7'>
         <h1 className='text-3xl text-balance text-amber-600 font-bold mb-10'>Conoce los que dicen nuestros clientes sobre Servicity</h1>
 
         <div className="grid max-sm:grid-cols-1 grid-cols-2 gap-10">

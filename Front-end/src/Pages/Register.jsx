@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import { sendRequest } from '../functions'
+import { sendRequest } from '../utils/sendRequest'
+import storage from '../Storage/storage';
 import servicityLogo from '../assets/servicity_logo.png';
 import backgroundRegister from '../assets/garden_maintenance.webp';
-import axios from '../axios';
+import { rootAxios } from '../axios';
 import { ToastContainer, showToast } from '../utils/Toast';
 
 const Register = () => {
@@ -15,7 +16,7 @@ const Register = () => {
   const go = useNavigate();
 
   const csrf = async () => {
-    await axios.get('/sanctum/csrf-cookie')
+    await rootAxios.get('/sanctum/csrf-cookie')
   }
 
   const handleSubmit = async (e) => {
@@ -27,14 +28,27 @@ const Register = () => {
       try {
         console.log('Register attempt:', { name, email, password, passwordConfirmation });
         await csrf();
-        const form = { name: name, email: email, password: password, password_confirmation: passwordConfirmation, role: 'client' };
-        const res = await sendRequest('POST', form, '/api/register', '', false);
+        const form = { 
+          name: name, 
+          email: email, 
+          password: password, 
+          password_confirmation: 
+          passwordConfirmation, 
+          user_type: 'client' };
+        const res = await sendRequest({method: 'POST', params: form, url: '/register', token: false});
 
         console.log(res);
 
         if (res.success == true) {
+          // Set authentication session similar to login
+          storage.set('authToken', res.data.token);
+          storage.set('authUser', res.data.user);
+          console.log(res.data.user);
+          
           showToast('Registro exitoso', 'success');
-          go('/login');
+          setTimeout(() => {
+            go('/client-dashboard');
+          }, 1000);
         }else{
           showToast(res.data.message, 'error');
         }

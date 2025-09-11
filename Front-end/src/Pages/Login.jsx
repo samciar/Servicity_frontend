@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router';
-import { sendRequest } from '../functions'
+import { sendRequest } from '../utils/sendRequest';
 import storage from '../Storage/storage';
 import servicityLogo from '../assets/servicity_logo.png';
 import backgroundLogin from '../assets/work_balance.jpg';
-import axios from '../axios';
+import { rootAxios } from '../axios';
  import { ToastContainer, showToast } from '../utils/Toast';
 
 const Login = () => {
@@ -13,33 +13,59 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+
+    // Check for stored email on component mount
+    const storedEmail = localStorage.getItem('rememberedEmail');
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setRememberMe(true); // Pre-check "Remember Me" if email is found
+    }
+
+  }, [])
+  
+
   const go = useNavigate();
 
   const csrf = async () => {
-    await axios.get('/sanctum/csrf-cookie')
+    await rootAxios.get('/sanctum/csrf-cookie')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if(loading == false) {
+
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
+
       setLoading(true);
       try {
         console.log('Login attempt:', { email, password, rememberMe });
         await csrf();
         const form = { email: email, password: password };
-        const res = await sendRequest('POST', form, '/api/login', '', false);
+        const res = await sendRequest({method: 'POST', params: form, url: '/login', token: false});
         
         console.log(res);
         
         if (res.success == true) {
           storage.set('authToken', res.data.token);
           storage.set('authUser', res.data.user);
+          console.log(res.data.user);
           
           showToast('Acceso exitoso', 'success');
           setTimeout(() => {
-            go('/Home');
-          }, 2000);
+            if(res.data.user.user_type == 'tasker'){
+              go('/tasker-dashboard');
+            }else if(res.data.user.user_type == 'admin'){
+              go('/admin-dashboard');
+            }else{
+              go('/client-dashboard');
+            }
+          }, 1000);
         }else{
           showToast(res.data.message, 'error');
         }
