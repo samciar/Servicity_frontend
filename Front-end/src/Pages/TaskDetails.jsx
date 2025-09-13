@@ -334,6 +334,19 @@ const TaskDetails = () => {
                                                 <div>
                                                     <h4 className="font-medium text-gray-900">{bid.tasker?.name}</h4>
                                                     <p className="text-sm text-gray-600">{formatCurrency(bid.bid_amount)}</p>
+                                                    {bid.tasker?.bio && (
+                                                        <p className="text-xs text-gray-500 mt-1 line-clamp-2">{bid.tasker.bio}</p>
+                                                    )}
+                                                    <a
+                                                        href={`/tasker/${bid.tasker_id}`}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            navigate(`/tasker/${bid.tasker_id}`);
+                                                        }}
+                                                        className="text-xs text-amber-600 hover:text-amber-700 mt-1 inline-block"
+                                                    >
+                                                        Ver perfil completo →
+                                                    </a>
                                                 </div>
                                             </div>
                                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${

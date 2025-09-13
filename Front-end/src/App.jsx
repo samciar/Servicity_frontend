@@ -17,6 +17,7 @@ import TaskSearch from "./Pages/TaskSearch";
 import TaskDetails from "./Pages/TaskDetails";
 import MyTasks from "./Pages/MyTasks";
 import ClientProfile from "./Pages/ClientProfile";
+import TaskerProfile from "./Pages/TaskerProfile";
 import AdminDashboard from "./Pages/dashboards/AdminDashboard";
 
 import './App.css'
@@ -45,6 +46,7 @@ function App() {
           <Route path='/task/:id' element={<TaskDetails />}/>
           <Route path='/my-tasks' element={<MyTasks />}/>
           <Route path='/client/:id' element={<ClientProfile />}/>
+          <Route path='/tasker/:id' element={<TaskerProfile />}/>
         </Route>
 
         <Route element={<ProtectedAdminRoutes />}>

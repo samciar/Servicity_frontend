@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { sendRequest } from '../utils/sendRequest';
 import { ToastContainer, showToast } from '../utils/Toast';
 import servicityLogo from '../assets/servicity_logo.png';
+import storage from '../Storage/storage';
 
 const Profile = () => {
     const [userData, setUserData] = useState({
@@ -15,18 +16,24 @@ const Profile = () => {
         profile_picture_url: '',
         bio: '',
         hourly_rate: '',
-        department_id: '',
-        municipality_id: '',
+        department: null,
+        municipality: null,
         is_available: false,
         skill_ids: []
     });
     const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const [userRole, setUserRole] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchUserProfile();
+        // Get user role from storage
+        const authUser = storage.get('authUser');
+        if (authUser && authUser.user_type) {
+            setUserRole(authUser.user_type);
+        }
     }, []);
 
     const fetchUserProfile = async () => {
@@ -45,8 +52,8 @@ const Profile = () => {
                     profile_picture_url: response.data.profile_picture_url || '',
                     bio: response.data.bio || '',
                     hourly_rate: response.data.hourly_rate || '',
-                    department_id: response.data.department_id || '',
-                    municipality_id: response.data.municipality_id || '',
+                    department: response.data.department || null,
+                    municipality: response.data.municipality || null,
                     is_available: response.data.is_available || false,
                     skill_ids: response.data.skill_ids || []
                 });
@@ -148,6 +155,167 @@ const Profile = () => {
         return '#';
     };
 
+    // Tasker-specific form fields
+    const renderTaskerForm = () => (
+        <>
+            {/* Bio */}
+            <div>
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
+                    Biografía
+                </label>
+                <textarea
+                    id="bio"
+                    name="bio"
+                    rows="4"
+                    value={userData.bio}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    placeholder="Cuéntanos sobre ti y tus habilidades..."
+                />
+            </div>
+
+            {/* Hourly Rate */}
+            <div>
+                <label htmlFor="hourly_rate" className="block text-sm font-medium text-gray-700 mb-2">
+                    Tarifa por hora (COP)
+                </label>
+                <input
+                    type="number"
+                    id="hourly_rate"
+                    name="hourly_rate"
+                    value={userData.hourly_rate}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    placeholder="Ej: 25000"
+                    min="0"
+                />
+            </div>
+
+            {/* Availability Switch */}
+            <div className="flex items-center">
+                <label htmlFor="is_available" className="flex items-center cursor-pointer">
+                    <div className="relative">
+                        <input
+                            type="checkbox"
+                            id="is_available"
+                            name="is_available"
+                            checked={userData.is_available}
+                            onChange={handleInputChange}
+                            className="sr-only"
+                        />
+                        <div className={`block w-14 h-7 rounded-full ${userData.is_available ? 'bg-amber-600' : 'bg-gray-300'}`}></div>
+                        <div className={`absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition-transform ${userData.is_available ? 'transform translate-x-7' : ''}`}></div>
+                    </div>
+                    <div className="ml-3 text-gray-700 font-medium">
+                        Disponible para trabajar
+                    </div>
+                </label>
+            </div>
+        </>
+    );
+
+    // Client-specific form fields
+    const renderClientForm = () => (
+        <>
+            {/* Bio */}
+            <div>
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
+                    Sobre mí
+                </label>
+                <textarea
+                    id="bio"
+                    name="bio"
+                    rows="4"
+                    value={userData.bio}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    placeholder="Cuéntanos sobre ti..."
+                />
+            </div>
+        </>
+    );
+
+    // Admin-specific form fields
+    const renderAdminForm = () => (
+        <>
+            {/* Bio */}
+            <div>
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
+                    Información del administrador
+                </label>
+                <textarea
+                    id="bio"
+                    name="bio"
+                    rows="4"
+                    value={userData.bio}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    placeholder="Información adicional del administrador..."
+                />
+            </div>
+        </>
+    );
+
+    // Tasker-specific display fields
+    const renderTaskerDisplay = () => (
+        <>
+            {/* Bio */}
+            <div>
+                <h3 className="text-sm font-medium text-gray-500">Biografía</h3>
+                <p className="mt-1 text-gray-900">
+                    {userData.bio || 'No hay biografía disponible'}
+                </p>
+            </div>
+
+            {/* Hourly Rate */}
+            <div>
+                <h3 className="text-sm font-medium text-gray-500">Tarifa por hora</h3>
+                <p className="mt-1 text-gray-900">
+                    {userData.hourly_rate ? 
+                        userData.hourly_rate.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }) : 
+                        'No especificada'
+                    }
+                </p>
+            </div>
+
+            {/* Availability */}
+            <div>
+                <h3 className="text-sm font-medium text-gray-500">Disponibilidad</h3>
+                <p className="mt-1">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${userData.is_available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {userData.is_available ? 'Disponible' : 'No disponible'}
+                    </span>
+                </p>
+            </div>
+        </>
+    );
+
+    // Client-specific display fields
+    const renderClientDisplay = () => (
+        <>
+            {/* Bio */}
+            <div>
+                <h3 className="text-sm font-medium text-gray-500">Sobre mí</h3>
+                <p className="mt-1 text-gray-900">
+                    {userData.bio || 'No hay información disponible'}
+                </p>
+            </div>
+        </>
+    );
+
+    // Admin-specific display fields
+    const renderAdminDisplay = () => (
+        <>
+            {/* Bio */}
+            <div>
+                <h3 className="text-sm font-medium text-gray-500">Información del administrador</h3>
+                <p className="mt-1 text-gray-900">
+                    {userData.bio || 'No hay información adicional'}
+                </p>
+            </div>
+        </>
+    );
+
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header */}
@@ -165,12 +333,30 @@ const Profile = () => {
                         >
                             Inicio
                         </button>
-                        <button
-                            onClick={() => navigate('/tasker-dashboard')}
-                            className="px-4 py-2 cursor-pointer bg-amber-600 text-white rounded-md hover:bg-amber-700"
-                        >
-                            Dashboard
-                        </button>
+                        {userRole === 'tasker' && (
+                            <button
+                                onClick={() => navigate('/tasker-dashboard')}
+                                className="px-4 py-2 cursor-pointer bg-amber-600 text-white rounded-md hover:bg-amber-700"
+                            >
+                                Dashboard
+                            </button>
+                        )}
+                        {userRole === 'client' && (
+                            <button
+                                onClick={() => navigate('/client-dashboard')}
+                                className="px-4 py-2 cursor-pointer bg-amber-600 text-white rounded-md hover:bg-amber-700"
+                            >
+                                Dashboard
+                            </button>
+                        )}
+                        {userRole === 'admin' && (
+                            <button
+                                onClick={() => navigate('/admin-dashboard')}
+                                className="px-4 py-2 cursor-pointer bg-amber-600 text-white rounded-md hover:bg-amber-700"
+                            >
+                                Dashboard
+                            </button>
+                        )}
                     </div>
                 </div>
             </header>
@@ -192,7 +378,7 @@ const Profile = () => {
                                 <div className="text-center mb-6">
                                     <div className="relative inline-block">
                                         <img
-                                            src={userData.profile_picture_url || '/default-avatar.png'}
+                                            src={userData.profile_picture_url || '/src/assets/users/default-user-image.jpg'}
                                             alt="Profile"
                                             className="w-32 h-32 rounded-full object-cover mx-auto border-4 border-amber-100"
                                         />
@@ -253,15 +439,19 @@ const Profile = () => {
                                         </div>
                                     )}
 
-                                    <div>
-                                        <p className="text-sm text-gray-500">Departamento</p>
-                                        <p className="text-gray-900">{userData.department_id || 'No especificado'}</p>
-                                    </div>
+                                    {userData.department && (
+                                        <div>
+                                            <p className="text-sm text-gray-500">Departamento</p>
+                                            <p className="text-gray-900">{userData.department.name || 'No especificado'}</p>
+                                        </div>
+                                    )}
 
-                                    <div>
-                                        <p className="text-sm text-gray-500">Municipio</p>
-                                        <p className="text-gray-900">{userData.municipality_id || 'No especificado'}</p>
-                                    </div>
+                                    {userData.municipality && (
+                                        <div>
+                                            <p className="text-sm text-gray-500">Municipio</p>
+                                            <p className="text-gray-900">{userData.municipality.name || 'No especificado'}</p>
+                                        </div>
+                                    )}
 
                                     {userData.skill_ids && userData.skill_ids.length > 0 && (
                                         <div>
@@ -312,90 +502,15 @@ const Profile = () => {
 
                                 {editing ? (
                                     <form onSubmit={handleProfileUpdate} className="space-y-6">
-                                        {/* Bio */}
-                                        <div>
-                                            <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
-                                                Biografía
-                                            </label>
-                                            <textarea
-                                                id="bio"
-                                                name="bio"
-                                                rows="4"
-                                                value={userData.bio}
-                                                onChange={handleInputChange}
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                                                placeholder="Cuéntanos sobre ti y tus habilidades..."
-                                            />
-                                        </div>
-
-                                        {/* Hourly Rate */}
-                                        <div>
-                                            <label htmlFor="hourly_rate" className="block text-sm font-medium text-gray-700 mb-2">
-                                                Tarifa por hora (COP)
-                                            </label>
-                                            <input
-                                                type="number"
-                                                id="hourly_rate"
-                                                name="hourly_rate"
-                                                value={userData.hourly_rate}
-                                                onChange={handleInputChange}
-                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                                                placeholder="Ej: 25000"
-                                                min="0"
-                                            />
-                                        </div>
-
-                                        {/* Availability Switch */}
-                                        <div className="flex items-center">
-                                            <label htmlFor="is_available" className="flex items-center cursor-pointer">
-                                                <div className="relative">
-                                                    <input
-                                                        type="checkbox"
-                                                        id="is_available"
-                                                        name="is_available"
-                                                        checked={userData.is_available}
-                                                        onChange={handleInputChange}
-                                                        className="sr-only"
-                                                    />
-                                                    <div className={`block w-14 h-7 rounded-full ${userData.is_available ? 'bg-amber-600' : 'bg-gray-300'}`}></div>
-                                                    <div className={`absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition-transform ${userData.is_available ? 'transform translate-x-7' : ''}`}></div>
-                                                </div>
-                                                <div className="ml-3 text-gray-700 font-medium">
-                                                    Disponible para trabajar
-                                                </div>
-                                            </label>
-                                        </div>
+                                        {userRole === 'tasker' && renderTaskerForm()}
+                                        {userRole === 'client' && renderClientForm()}
+                                        {userRole === 'admin' && renderAdminForm()}
                                     </form>
                                 ) : (
                                     <div className="space-y-6">
-                                        {/* Bio */}
-                                        <div>
-                                            <h3 className="text-sm font-medium text-gray-500">Biografía</h3>
-                                            <p className="mt-1 text-gray-900">
-                                                {userData.bio || 'No hay biografía disponible'}
-                                            </p>
-                                        </div>
-
-                                        {/* Hourly Rate */}
-                                        <div>
-                                            <h3 className="text-sm font-medium text-gray-500">Tarifa por hora</h3>
-                                            <p className="mt-1 text-gray-900">
-                                                {userData.hourly_rate ? 
-                                                    userData.hourly_rate.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }) : 
-                                                    'No especificada'
-                                                }
-                                            </p>
-                                        </div>
-
-                                        {/* Availability */}
-                                        <div>
-                                            <h3 className="text-sm font-medium text-gray-500">Disponibilidad</h3>
-                                            <p className="mt-1">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${userData.is_available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                                                    {userData.is_available ? 'Disponible' : 'No disponible'}
-                                                </span>
-                                            </p>
-                                        </div>
+                                        {userRole === 'tasker' && renderTaskerDisplay()}
+                                        {userRole === 'client' && renderClientDisplay()}
+                                        {userRole === 'admin' && renderAdminDisplay()}
                                     </div>
                                 )}
                             </div>
